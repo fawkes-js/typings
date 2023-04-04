@@ -1,7 +1,7 @@
-export type REDISOptions = {
-    url?: string;
-    hostname?: string;
-    port?: string;
-    username?: string;
-    password?: string;
-};
+export interface REDISOptions {
+  url?: string
+  hostname?: string
+  port?: string
+  username?: string
+  password?: string
+}
