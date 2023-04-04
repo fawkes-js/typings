@@ -1,3 +1,3 @@
-export type RabbitOptions = {
-    hostname: string;
-};
+export interface RabbitOptions {
+  hostname: string
+}
