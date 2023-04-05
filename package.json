@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^18.15.11",
     "nodemon": "^2.0.19",
     "ts-node": "^10.9.1"
   },
