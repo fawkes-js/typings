@@ -3,4 +3,7 @@ export enum RequestMethod {
   Post = 'POST',
   Put = 'PUT',
   Delete = 'DELETE',
+  Patch = 'PATCH',
 }
+
+export type Response = {};
