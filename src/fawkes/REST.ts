@@ -6,4 +6,4 @@ export enum RequestMethod {
   Patch = 'PATCH',
 }
 
-export type Response = {};
+export interface Response {}
