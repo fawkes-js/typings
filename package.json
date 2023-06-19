@@ -1,5 +1,5 @@
 {
-  "name": "@fawkes.js/api-types",
+  "name": "@fawkes.js/typings",
   "main": "./dist/esm/index.js",
   "module": "./dist/index.mjs",
   "types": "dist/types/index.d.ts",
@@ -28,9 +28,12 @@
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "eslint": "^8.37.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.3"
   }
 }
