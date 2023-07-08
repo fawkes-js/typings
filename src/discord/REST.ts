@@ -85,10 +85,13 @@ export interface DiscordAPIApplication {
   install_params?: DiscordAPIInstallParams;
   custom_install_url?: string;
 }
-export interface DiscordAPIRoleTag {
+export interface DiscordAPIRoleTags {
   bot_id?: Snowflake;
   integration_id?: Snowflake;
   premium_subscriber?: null;
+  subscription_listing_id?: Snowflake;
+  available_for_purchase?: null;
+  guild_connections?: null;
 }
 
 export interface DiscordAPIRole {
@@ -102,7 +105,7 @@ export interface DiscordAPIRole {
   permissions: string;
   managed: boolean;
   mentionable: boolean;
-  tags?: DiscordAPIRoleTag;
+  tags?: DiscordAPIRoleTags;
 }
 
 export interface DiscordAPIEmoji {
@@ -160,7 +163,7 @@ export interface DiscordAPIUser {
   bot?: boolean;
   system?: boolean;
   mfa_enabled?: boolean;
-  banmner?: string | null;
+  banner?: string | null;
   accent_color?: string | null;
   locale?: string;
   verified?: boolean;
@@ -257,11 +260,60 @@ export interface DiscordAPIChannel {
 }
 
 export interface DiscordAPIOverwrite {}
-export interface DiscordAPIPresenceUpdate {}
 
-export interface DiscordAPIStageInstance {}
+export enum DiscordAPIStagePrivacyLevel {
+  Public = 1,
+  GuildOnly = 2,
+}
+export interface DiscordAPIStageInstance {
+  id: Snowflake;
+  guild_id: Snowflake;
+  channel_id: Snowflake;
+  topic: string;
+  privacy_level: DiscordAPIStagePrivacyLevel;
+  discoverable_disabled: boolean;
+  guild_scheduled_event_id: Snowflake | undefined;
+}
 
-export interface DiscordAPIGuildScheduledEvent {}
+export enum DiscordAPIGuildScheduledEventPrivacyLevel {
+  GuildOnly = 2,
+}
+
+export enum DiscordAPIGuildScheduledEventStatus {
+  Scheduled = 1,
+  Active = 2,
+  Completed = 3,
+  Cancelled = 4,
+}
+
+export enum DiscordAPIGuildScheduledEventEntityType {
+  StageInstance = 1,
+  Voice = 2,
+  External = 3,
+}
+
+export interface DiscordAPIGuildScheduledEventEntityMetadata {
+  location?: string;
+}
+
+export interface DiscordAPIGuildScheduledEvent {
+  id: Snowflake;
+  guild_id: Snowflake;
+  channel_id: Snowflake;
+  creator_id?: Snowflake;
+  name: string;
+  description?: string;
+  scheduled_start_time: Date;
+  scheduled_end_time: Date;
+  privacy_level: DiscordAPIGuildScheduledEventPrivacyLevel;
+  status: DiscordAPIGuildScheduledEventStatus;
+  entity_type: DiscordAPIGuildScheduledEventEntityType;
+  entity_id: Snowflake;
+  entity_metadata: DiscordAPIGuildScheduledEventEntityMetadata;
+  creator?: DiscordAPIUser;
+  user_count?: number;
+  image?: string | undefined;
+}
 
 export enum DiscordAPIGuildVerificationLevel {
   NONE = 0,
@@ -456,4 +508,119 @@ export interface DiscordAPIInteraction {
   app_permissions?: string;
   locale?: DiscordAPILocale;
   guild_locale?: string;
+}
+
+export enum DiscordAPIAutoModerationRuleTriggerEventType {
+  MessageSend = 1,
+}
+
+export enum DiscordAPIAutoModerationRuleTriggerType {
+  Keyword = 1,
+  Spam = 3,
+  KeywordPreset = 4,
+  MentionSpam = 5,
+}
+
+export enum DiscordAPIAutoModerationRuleKeywordPresetType {
+  Profanity = 1,
+  SexualContent = 2,
+  Slurs = 3,
+}
+export interface DiscordAPIAutoModerationRuleTriggerMetadata {
+  keyword_filter: string[];
+  regex_patterns: string[];
+  presets: DiscordAPIAutoModerationRuleKeywordPresetType;
+  allow_list: string[];
+  mention_total_limit: number;
+  mention_raid_protection_enabled: boolean;
+}
+
+export enum DiscordAPIAutoModerationActionType {
+  BlockMessage = 1,
+  SendAlertmessage = 2,
+  Timeout = 3,
+}
+
+export interface DiscordAPIAutoModerationActionMetadata {
+  channel_id: Snowflake;
+  duration_seconds: number;
+  custom_message?: string;
+}
+
+export interface DiscordAPIAutoModerationAction {
+  type: DiscordAPIAutoModerationActionType;
+  metadata?: DiscordAPIAutoModerationActionMetadata;
+}
+export interface DiscordAPIAutoModerationRule {
+  id: Snowflake;
+  guild_id: Snowflake;
+  name: string;
+  creator_id: Snowflake;
+  event_type: DiscordAPIAutoModerationRuleTriggerEventType;
+  trigger_type: DiscordAPIAutoModerationRuleTriggerType;
+  trigger_metadata: DiscordAPIAutoModerationRuleTriggerMetadata;
+  actions: DiscordAPIAutoModerationAction[];
+  enabled: boolean;
+  exempt_roles: Snowflake[];
+  exempt_channels: Snowflake[];
+}
+
+export interface DiscordAPIActivityTimestamps {
+  start?: number;
+  end?: number;
+}
+
+export interface DiscordAPIActivityParty {
+  id?: string;
+  size?: number;
+}
+
+export interface DiscordAPIActivityAssets {
+  large_image?: string;
+  large_text?: string;
+  small_image?: string;
+  small_text?: string;
+}
+
+export interface DiscordAPIActivitySecrets {
+  join?: string;
+  spectate?: string;
+  match?: string;
+}
+
+export interface DiscordAPIActivityButton {
+  label: string;
+  url: string;
+}
+
+export interface DiscordAPIActivity {
+  name: string;
+  type: number;
+  url?: string | undefined;
+  created_at: number;
+  timestamps?: DiscordAPIActivityTimestamps;
+  application_id?: Snowflake;
+  details?: string | undefined;
+  state?: string | undefined;
+  emoji?: DiscordAPIEmoji | undefined;
+  party?: DiscordAPIActivityParty;
+  assets?: DiscordAPIActivityAssets;
+  secrets?: DiscordAPIActivitySecrets;
+  instance?: boolean;
+  flags?: number;
+  buttons?: DiscordAPIActivityButton[];
+}
+
+export interface DiscordAPIClientStatus {
+  desktop?: string;
+  mobile?: string;
+  web?: string;
+}
+
+export interface DiscordAPIPresenceUpdate {
+  user: DiscordAPIUser;
+  guild_id: Snowflake;
+  status: string;
+  activities: DiscordAPIActivity[];
+  client_status: DiscordAPIClientStatus;
 }
