@@ -1,6 +1,17 @@
-import { type DiscordAPIGuildVerificationLevel, type DiscordAPIFeature, type DiscordAPIInteractionType } from '../discord/REST';
-
-export type Snowflake = string;
+import {
+  type DiscordAPIGuildVerificationLevel,
+  type DiscordAPIFeature,
+  type DiscordAPIInteractionType,
+  type DiscordAPIAutoModerationActionType,
+  type DiscordAPIAutoModerationRuleKeywordPresetType,
+  type DiscordAPIAutoModerationRuleTriggerEventType,
+  type DiscordAPIAutoModerationRuleTriggerType,
+  type Snowflake,
+  type DiscordAPIStagePrivacyLevel,
+  type DiscordAPIGuildScheduledEventStatus,
+  type DiscordAPIGuildScheduledEventEntityType,
+  type DiscordAPIGuildScheduledEventPrivacyLevel,
+} from '../discord/REST';
 
 export interface FawkesTeam {}
 
@@ -13,7 +24,7 @@ export interface FawkesApplication {
   description: string;
   rpcOrigins?: string[];
   botPublic: boolean;
-  botRequireCode_Grant: boolean;
+  botRequireCodeGrant: boolean;
   termsOfServiceUrl?: string;
   privacyPolicyUrl?: string;
   owner?: FawkesUser;
@@ -24,13 +35,16 @@ export interface FawkesApplication {
   coverImage?: string;
   flags?: number;
   tags?: string[];
-  install_params?: FawkesInstallParams;
+  installParams?: FawkesInstallParams;
   customInstallUrl?: string;
 }
-export interface FawkesRoleTag {
+export interface FawkesRoleTags {
   botId?: Snowflake;
   integrationId?: Snowflake;
   premiumSubscriber?: null;
+  subscriptionListingId?: Snowflake;
+  availableForPurchase?: null;
+  guildConnections?: null;
 }
 
 export interface FawkesRole {
@@ -44,7 +58,7 @@ export interface FawkesRole {
   permissions: string;
   managed: boolean;
   mentionable: boolean;
-  tags?: FawkesRoleTag;
+  tags?: FawkesRoleTags;
 }
 
 export interface FawkesEmoji {
@@ -78,8 +92,8 @@ export interface FawkesUser {
   bot?: boolean;
   system?: boolean;
   mfaEnabled?: boolean;
-  banmner?: string | null;
-  accent_color?: string | null;
+  bannner?: string | null;
+  accentColor?: string | null;
   locale?: string;
   verified?: boolean;
   email?: string | null;
@@ -90,13 +104,13 @@ export interface FawkesUser {
 
 export interface FawkesSticker {
   id: Snowflake;
-  pack_id?: Snowflake;
+  packId?: Snowflake;
   name: string;
   description: string | null;
   tags: string;
   asset?: string;
   type: number;
-  format_type: number;
+  formatType: number;
   available?: boolean;
   guildId?: Snowflake;
   user?: FawkesUser;
@@ -124,7 +138,7 @@ export interface FawkesGuildMember {
   nick?: string | null;
   avatar?: string | null;
   roles: Snowflake[];
-  joined_at: Date;
+  joinedAt: Date;
   premiumSince?: Date | null;
   deaf: boolean;
   mute: boolean;
@@ -175,11 +189,38 @@ export interface FawkesChannel {
 
 export interface FawkesOverwrite {}
 
-export interface FawkesPresenceUpdate {}
+export interface FawkesStageInstance {
+  id: Snowflake;
+  guildId: Snowflake;
+  channelId: Snowflake;
+  topic: string;
+  privacyLevel: DiscordAPIStagePrivacyLevel;
+  discoverableDisabled: boolean;
+  guildScheduledEventId: Snowflake | undefined;
+}
 
-export interface FawkesStageInstance {}
+export interface FawkesGuildScheduledEventEntityMetadata {
+  location?: string;
+}
 
-export interface FawkesGuildScheduledEvent {}
+export interface FawkesGuildScheduledEvent {
+  id: Snowflake;
+  guildId: Snowflake;
+  channelId: Snowflake;
+  creatorId?: Snowflake;
+  name: string;
+  description?: string;
+  scheduledStartTime: Date;
+  scheduledEndTime: Date;
+  privacyLevel: DiscordAPIGuildScheduledEventPrivacyLevel;
+  status: DiscordAPIGuildScheduledEventStatus;
+  entityType: DiscordAPIGuildScheduledEventEntityType;
+  entityId: Snowflake;
+  entityMetadata: FawkesGuildScheduledEventEntityMetadata;
+  creator?: FawkesUser;
+  userCount?: number;
+  image?: string | undefined;
+}
 
 export enum FawkesLocale {}
 
@@ -235,6 +276,9 @@ export interface FawkesGuild {
   presences: FawkesPresenceUpdate[];
   stageInstances: FawkesStageInstance[];
   guildScheduledEvents: FawkesGuildScheduledEvent[];
+
+  autoModerationRules: FawkesAutoModerationRule[];
+  bans: Snowflake[];
 }
 
 export interface FawkesResolvedData {}
@@ -325,4 +369,97 @@ export interface FawkesInteraction {
   appPermissions?: string;
   locale?: FawkesLocale;
   guildLocale?: string;
+}
+
+export interface FawkesAutoModerationRuleTriggerMetadata {
+  keywordFilter: string[];
+  regexPatterns: string[];
+  presets: DiscordAPIAutoModerationRuleKeywordPresetType;
+  allowList: string[];
+  mentionTotalLimit: number;
+  mentionRaidProtectionEnabled: boolean;
+}
+
+export interface FawkesAutoModerationActionMetadata {
+  channelId: Snowflake;
+  durationSeconds: number;
+  customMessage?: string;
+}
+
+export interface FawkesAutoModerationAction {
+  type: DiscordAPIAutoModerationActionType;
+  metadata?: FawkesAutoModerationActionMetadata;
+}
+export interface FawkesAutoModerationRule {
+  id: Snowflake;
+  guildId: Snowflake;
+  name: string;
+  creatorId: Snowflake;
+  eventType: DiscordAPIAutoModerationRuleTriggerEventType;
+  triggerType: DiscordAPIAutoModerationRuleTriggerType;
+  triggerMetadata: FawkesAutoModerationRuleTriggerMetadata;
+  actions: FawkesAutoModerationAction[];
+  enabled: boolean;
+  exemptRoles: Snowflake[];
+  exemptChannels: Snowflake[];
+}
+
+export interface FawkesActivityTimestamps {
+  start?: number;
+  end?: number;
+}
+
+export interface FawkesActivityParty {
+  id?: string;
+  size?: number;
+}
+
+export interface FawkesActivityAssets {
+  largeImage?: string;
+  largeText?: string;
+  smallImage?: string;
+  smallText?: string;
+}
+
+export interface FawkesActivitySecrets {
+  join?: string;
+  spectate?: string;
+  match?: string;
+}
+
+export interface FawkesActivityButton {
+  label: string;
+  url: string;
+}
+
+export interface FawkesActivity {
+  name: string;
+  type: number;
+  url?: string | undefined;
+  createdAt: number;
+  timestamps?: FawkesActivityTimestamps;
+  applicationId?: Snowflake;
+  details?: string | undefined;
+  state?: string | undefined;
+  emoji?: FawkesEmoji | undefined;
+  party?: FawkesActivityParty;
+  assets?: FawkesActivityAssets;
+  secrets?: FawkesActivitySecrets;
+  instance?: boolean;
+  flags?: number;
+  buttons?: FawkesActivityButton[];
+}
+
+export interface FawkesClientStatus {
+  desktop?: string;
+  mobile?: string;
+  web?: string;
+}
+
+export interface FawkesPresenceUpdate {
+  user: FawkesUser;
+  guildId: Snowflake;
+  status: string;
+  activities: FawkesActivity[];
+  clientStatus: FawkesClientStatus;
 }
