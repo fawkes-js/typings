@@ -624,3 +624,25 @@ export interface DiscordAPIPresenceUpdate {
   activities: DiscordAPIActivity[];
   client_status: DiscordAPIClientStatus;
 }
+
+export interface DiscordAPIMessageComponentEmoji {
+  id?: Snowflake;
+  animated?: boolean;
+  name?: string;
+}
+
+export enum DiscordAPIInteractionCallbackType {
+  Pong = 1,
+  ChannelMessageWithSource = 4,
+  DeferredChannelMessageWithSource = 5,
+  DeferredUpdateMessage = 6,
+  UpdateMessage = 7,
+  ApplicationCommandAutocompleteResult = 8,
+  Modal = 9,
+}
+
+export enum DiscordAPIApplicationCommandType {
+  ChatInput = 1,
+  User = 2,
+  Message = 3,
+}

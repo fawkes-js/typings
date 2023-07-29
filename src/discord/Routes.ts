@@ -1,4 +1,5 @@
 import { RequestMethod } from '../fawkes/REST';
+import { type Snowflake } from './REST';
 
 export const Routes = {
   gatewayBot() {
@@ -33,7 +34,23 @@ export const Routes = {
       authorized: true,
     };
   },
-  createInteractionResponse(interactionId: string, interactionToken: string) {
+  deleteApplicationCommand(applicationId: string, id: string) {
+    return {
+      requestMethod: RequestMethod.Delete,
+      endpoint: `/applications/${applicationId}/commands/${id}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  bulkUpdateApplicationCommand(applicationId: string) {
+    return {
+      requestMethod: RequestMethod.Put,
+      endpoint: `/applications/${applicationId}/commands`,
+      important: false,
+      authorized: true,
+    };
+  },
+  interactionCallback(interactionId: string, interactionToken: string) {
     return {
       requestMethod: RequestMethod.Post,
       endpoint: `/interactions/${interactionId}/${interactionToken}/callback`,
@@ -41,10 +58,7 @@ export const Routes = {
       authorized: true,
     };
   },
-  getOriginalInteractionResponse(
-    applicationId: string,
-    interactionToken: string
-  ) {
+  getOriginalInteractionResponse(applicationId: string, interactionToken: string) {
     return {
       requestMethod: RequestMethod.Get,
       endpoint: `/webhooks/${applicationId}/${interactionToken}/messages/@original`,
@@ -52,6 +66,7 @@ export const Routes = {
       authorized: true,
     };
   },
+
   addMemberRole(guildId: string, userId: string, roleId: string) {
     return {
       requestMethod: RequestMethod.Put,
@@ -72,6 +87,31 @@ export const Routes = {
     return {
       requestMethod: RequestMethod.Put,
       endpoint: `/guilds/${guildId}/bans/${userId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  webhook(applicationId: string, token: string) {
+    return {
+      requestMethod: RequestMethod.Post,
+      endpoint: `/webhooks/${applicationId}/${token}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  webhookMessage(applicationId: string, token: string, messageId: Snowflake | '@original', method: RequestMethod) {
+    return {
+      requestMethod: method,
+      endpoint: `/webhooks/${applicationId}/${token}/messages/${messageId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+
+  editMessage(channelId: string, messageId: string) {
+    return {
+      requestMethod: RequestMethod.Patch,
+      endpoint: `/channels/${channelId}/messages/${messageId}`,
       important: false,
       authorized: true,
     };
