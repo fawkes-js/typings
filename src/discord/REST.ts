@@ -430,7 +430,7 @@ export enum DiscordAPIMessageComponentType {
   MentionableSelect = 7,
   ChannelSelect = 7,
 }
-export interface DiscordAPIInteractionData {
+export interface DiscordAPIApplicationCommandInteractionData {
   id: Snowflake;
   name: string;
   type: number;
@@ -438,6 +438,20 @@ export interface DiscordAPIInteractionData {
   options?: DiscordAPIApplicationCommandInteractionDataOption[];
   guild_id?: Snowflake;
   target_id?: Snowflake;
+}
+
+export interface DiscordAPISelectOptionValue {
+  label: string;
+  value: string;
+  description?: string;
+  emoji?: DiscordAPIEmoji;
+  default?: boolean;
+}
+
+export interface DiscordAPIMessageComponentInteractionData {
+  custom_id: string;
+  component_type: number;
+  values?: DiscordAPISelectOptionValue[];
 }
 
 export interface DiscordAPIChannelMention {}
@@ -493,11 +507,21 @@ export interface DiscordAPIMessage {
   position?: number;
 }
 
-export interface DiscordAPIInteraction {
+export type DiscordAPIMessageComponentInteraction = DiscordAPIBaseInteraction<
+  DiscordAPIInteractionType.MessageComponent,
+  DiscordAPIMessageComponentInteractionData
+>;
+
+export type DiscordAPIApplicationCommandInteraction = DiscordAPIBaseInteraction<
+  DiscordAPIInteractionType.ApplicationCommand,
+  DiscordAPIApplicationCommandInteractionData
+>;
+
+export interface DiscordAPIBaseInteraction<Type extends DiscordAPIInteractionType, Data> {
   id: Snowflake;
   application_id: Snowflake;
-  type: DiscordAPIInteractionType;
-  data?: DiscordAPIInteractionData;
+  type: Type;
+  data?: Data;
   guild_id?: Snowflake;
   channel_id?: Snowflake;
   member?: DiscordAPIGuildMember;
