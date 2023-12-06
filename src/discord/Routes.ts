@@ -116,4 +116,92 @@ export const Routes = {
       authorized: true,
     };
   },
+  getAutoModerationRule(guildId: string, ruleId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/guilds/${guildId}/auto-moderation/rules/${ruleId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  createMessage(channelId: string) {
+    return {
+      requestMethod: RequestMethod.Post,
+      endpoint: `/channels/${channelId}/messages`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getGuildMember(guildId: string, userId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/guilds/${guildId}/members/${userId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getGuild(guildId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/guilds/${guildId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getUser(userId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/gusers/${userId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getChannel(channelId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/channels/${channelId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getGuildRoles(guildId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/guilds/${guildId}/roles`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getGuildChannels(guildId: string) {
+    return {
+      requestMethod: RequestMethod.Get,
+      endpoint: `/guilds/${guildId}/channels`,
+      important: false,
+      authorized: true,
+    };
+  },
+  createGuildRole(guildId: string) {
+    return {
+      requestMethod: RequestMethod.Post,
+      endpoint: `/guilds/${guildId}/roles`,
+      important: false,
+      authorized: true,
+    };
+  },
+  deleteGuildRole(guildId: string, roleId: string) {
+    return {
+      requestMethod: RequestMethod.Delete,
+      endpoint: `/guilds/${guildId}/roles/${roleId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  updateGuildRole(guildId: string, roleId: string) {
+    return {
+      requestMethod: RequestMethod.Patch,
+      endpoint: `/guilds/${guildId}/roles/${roleId}`,
+      important: false,
+      authorized: true,
+    };
+  },
 };

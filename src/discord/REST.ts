@@ -670,3 +670,42 @@ export enum DiscordAPIApplicationCommandType {
   User = 2,
   Message = 3,
 }
+
+export enum DiscordAPIAutoModerationActionTriggerType {
+  Keyword = 1,
+  Spam = 3,
+  KeywordPreset = 4,
+  MentionSpam = 5,
+}
+export interface DiscordAPIAutoModerationActionExecutionEvent {
+  guild_id: Snowflake;
+  action: DiscordAPIAutoModerationAction;
+  rule_id: Snowflake;
+  rule_trigger_type: DiscordAPIAutoModerationActionTriggerType;
+  user_id: Snowflake;
+  channel_id?: Snowflake;
+  message_id?: Snowflake;
+  alert_system_message_id?: Snowflake;
+  content: string;
+  matched_keyword: string | null;
+  matched_content: string | null;
+}
+
+export interface DiscordAPIApplicationCommandPermissionsStructure {
+  id: Snowflake;
+  application_id: Snowflake;
+  guild_id: Snowflake;
+  permissions: DiscordAPIApplicationCommandPermission[];
+}
+
+export interface DiscordAPIApplicationCommandPermission {
+  id: Snowflake;
+  type: DiscordAPIApplicationCommandPermissionType;
+  permission: boolean;
+}
+
+export enum DiscordAPIApplicationCommandPermissionType {
+  ROLE = 1,
+  USER = 2,
+  CHANNEL = 3,
+}
