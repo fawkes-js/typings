@@ -204,4 +204,20 @@ export const Routes = {
       authorized: true,
     };
   },
+  getGuildScheduledEvent(guildId: string, eventId: string) {
+    return {
+      requestMethod: RequestMethod.Patch,
+      endpoint: `/guilds/${guildId}/scheduled-events/${eventId}`,
+      important: false,
+      authorized: true,
+    };
+  },
+  getInvite(code: string) {
+    return {
+      requestMethod: RequestMethod.Patch,
+      endpoint: `/invites/${code}`,
+      important: false,
+      authorized: true,
+    };
+  },
 };

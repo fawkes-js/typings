@@ -217,7 +217,7 @@ export interface FawkesGuildScheduledEvent {
   status: DiscordAPIGuildScheduledEventStatus;
   entityType: DiscordAPIGuildScheduledEventEntityType;
   entityId: Snowflake;
-  entityMetadata: FawkesGuildScheduledEventEntityMetadata;
+  entityMetadata: FawkesGuildScheduledEventEntityMetadata | null;
   creator?: FawkesUser;
   userCount?: number;
   image?: string | undefined;
@@ -285,7 +285,6 @@ export interface FawkesGuild {
 
 export interface FawkesApplicationCommandPermissionStructure {
   id: Snowflake;
-  applicationId: Snowflake;
   permissions: FawkesApplicationCommandPermission[];
 }
 

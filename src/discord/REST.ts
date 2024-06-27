@@ -33,7 +33,7 @@ export enum GatewayIntents {
   Guilds = 1 << 0,
   GuildMembers = 1 << 1,
   GuildBans = 1 << 2,
-  GuildEMojisAndStickers = 1 << 3,
+  GuildEmojisAndStickers = 1 << 3,
   GuildIntegrations = 1 << 4,
   GuildWebhooks = 1 << 5,
   GuildInvites = 1 << 6,
@@ -216,6 +216,7 @@ export interface DiscordAPIGuildMember {
   pending?: boolean;
   permissions?: string;
   communication_disabled_until?: Date;
+  guild_id: string;
 }
 
 export interface DiscordAPIThreadMetadata {}
@@ -708,4 +709,26 @@ export enum DiscordAPIApplicationCommandPermissionType {
   ROLE = 1,
   USER = 2,
   CHANNEL = 3,
+}
+
+export interface DiscordAPIInviteStageInstance {
+  members: DiscordAPIGuildMember[];
+  participant_count: number;
+  speaker_count: number;
+  topic: string;
+}
+
+export interface DiscordAPIInvite {
+  code: string;
+  guild?: DiscordAPIGuild;
+  channel: DiscordAPIChannel;
+  inviter?: DiscordAPIUser;
+  target_type?: number;
+  target_user?: DiscordAPIUser;
+  target_application?: DiscordAPIApplication;
+  approximate_presence_count?: number;
+  approximate_member_count?: number;
+  expires_at?: Date;
+  stage_instance?: DiscordAPIInviteStageInstance;
+  guild_scheduled_event?: DiscordAPIGuildScheduledEvent;
 }
