@@ -11,6 +11,7 @@ import {
   type DiscordAPIGuildScheduledEventStatus,
   type DiscordAPIGuildScheduledEventEntityType,
   type DiscordAPIGuildScheduledEventPrivacyLevel,
+  type DiscordAPIApplicationCommandPermissionType,
 } from '../discord/REST';
 
 export interface FawkesTeam {}
@@ -216,7 +217,7 @@ export interface FawkesGuildScheduledEvent {
   status: DiscordAPIGuildScheduledEventStatus;
   entityType: DiscordAPIGuildScheduledEventEntityType;
   entityId: Snowflake;
-  entityMetadata: FawkesGuildScheduledEventEntityMetadata;
+  entityMetadata: FawkesGuildScheduledEventEntityMetadata | null;
   creator?: FawkesUser;
   userCount?: number;
   image?: string | undefined;
@@ -279,6 +280,18 @@ export interface FawkesGuild {
 
   autoModerationRules: FawkesAutoModerationRule[];
   bans: Snowflake[];
+  applicationCommandPermissions: FawkesApplicationCommandPermissionStructure[];
+}
+
+export interface FawkesApplicationCommandPermissionStructure {
+  id: Snowflake;
+  permissions: FawkesApplicationCommandPermission[];
+}
+
+export interface FawkesApplicationCommandPermission {
+  id: Snowflake;
+  type: DiscordAPIApplicationCommandPermissionType;
+  permission: boolean;
 }
 
 export interface FawkesResolvedData {}
